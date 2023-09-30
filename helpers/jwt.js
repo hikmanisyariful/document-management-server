@@ -6,7 +6,6 @@ module.exports = {
     return token;
   },
   verifyToken: function (token) {
-    console.log("Masuk JWT");
     return jwt.verify(token, "secret");
   },
 };

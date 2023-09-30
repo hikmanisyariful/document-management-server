@@ -1,30 +1,17 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const Model = sequelize.Sequelize.Model;
+  const Role = sequelize.define("Role", {
+    name: DataTypes.STRING,
+  });
 
-  class Role extends Model {
-    static associate(models) {
-      Role.hasMany(models.User, {
-        foreignKey: "roleId",
-      });
-    }
-  }
+  Role.associate = (models) => {
+    Role.hasMany(models.User, {
+      foreignKey: "roleId",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+  };
 
-  Role.init(
-    {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: sequelize.INTEGER,
-      },
-      name: DataTypes.STRING,
-    },
-    {
-      sequelize,
-      modelName: "Role",
-    }
-  );
   return Role;
 };

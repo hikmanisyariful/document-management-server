@@ -8,17 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      fileId: {
+        type: Sequelize.STRING,
+      },
       fileName: {
         type: Sequelize.STRING,
       },
       fileURL: {
         type: Sequelize.STRING,
       },
+      fileSize: {
+        type: Sequelize.FLOAT,
+      },
       status: {
         type: Sequelize.STRING,
-      },
-      userId: {
-        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

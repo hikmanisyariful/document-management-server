@@ -2,24 +2,14 @@
 const { hashPassword } = require("../helpers/bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
-  const Model = sequelize.Sequelize.Model;
-
-  class User extends Model {
-    static associate(models) {
-      User.belongsTo(models.Role);
-      User.hasMany(models.Document, {
-        foreignKey: "userId",
-      });
-    }
-  }
-
-  User.init(
+  const User = sequelize.define(
+    "User",
     {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: sequelize.INTEGER,
+        type: DataTypes.INTEGER,
       },
       username: {
         type: DataTypes.STRING,
@@ -71,19 +61,28 @@ module.exports = (sequelize, DataTypes) => {
       roleId: DataTypes.INTEGER,
     },
     {
-      sequelize,
-      modelName: "User",
       hooks: {
         beforeCreate: (user, options) => {
           let pas = user.password;
           user.password = hashPassword(pas);
         },
-        beforeUpdate: (user, options) => {
-          let pas = user.password;
-          user.password = hashPassword(pas);
-        },
       },
+      sequelize,
     }
   );
+
+  User.associate = (models) => {
+    User.belongsTo(models.Role, {
+      foreignKey: "roleId",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+    User.hasMany(models.Document, {
+      foreignKey: "userId",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+  };
+
   return User;
 };

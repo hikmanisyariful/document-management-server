@@ -37,10 +37,16 @@ module.exports = (err, req, res, next) => {
       message: "BAD REQUEST",
       errors: [err.name],
     };
-  } else if (err.name === "Invalid email/password") {
+  } else if (err.name === "Invalid Email/Password") {
     status = 400;
     errObj = {
       message: "BAD REQUEST",
+      errors: [err.name],
+    };
+  } else if (err.name === "Invalid Token Error") {
+    status = 401;
+    errObj = {
+      message: "Authentication",
       errors: [err.name],
     };
   } else if (err.name === "Failed Send Email") {
@@ -55,8 +61,14 @@ module.exports = (err, req, res, next) => {
       message: "BAD REQUEST",
       errors: [err.name],
     };
+  } else if (err.name === "Please Login First") {
+    status = 401;
+    errObj = {
+      message: "Authentication",
+      errors: [err.name],
+    };
   }
 
-  errObj.status = false;
+  // errObj.status = false;
   res.status(status).json(errObj);
 };

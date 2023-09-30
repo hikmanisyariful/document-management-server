@@ -17,12 +17,6 @@ module.exports = {
           password: "secret",
           roleId: 2,
         },
-        {
-          username: "johndoe03",
-          email: "johndoe03@mail.com",
-          password: "secret",
-          roleId: 1,
-        },
       ],
       {}
     );
