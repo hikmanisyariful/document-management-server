@@ -5,7 +5,7 @@ const config = require("./config/app");
 
 const app = express();
 const cors = require("cors");
-const port = config.appPort;
+const port = config.appPort || 3000;
 const routes = require("./routers");
 const errorHandlare = require("./middlewares/errorHandler.js");
 
