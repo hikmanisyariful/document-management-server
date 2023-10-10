@@ -39,9 +39,6 @@ class DocumentController {
             model: User,
           },
         ],
-        where: {
-          userId: req.currentUserId,
-        },
       });
       res.status(200).json({
         message: "Get all Documents",
