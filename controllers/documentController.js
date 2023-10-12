@@ -49,6 +49,28 @@ class DocumentController {
     }
   }
 
+  static async findOne(req, res, next) {
+    try {
+      const id = req.params.id;
+      const document = await Document.findOne({
+        where: {
+          id,
+        },
+        include: [
+          {
+            model: User,
+          },
+        ],
+      });
+      res.status(200).json({
+        message: "Get Detail Documents",
+        data: document,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async updateStatus(req, res, next) {
     try {
       const id = req.params.id;
