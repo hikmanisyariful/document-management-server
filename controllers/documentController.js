@@ -77,12 +77,24 @@ class DocumentController {
       const payload = {
         status: req.body.status,
       };
-      const document = await Document.update(payload, {
+      await Document.update(payload, {
         where: {
           id,
         },
         returning: true,
       });
+
+      const document = await Document.findOne({
+        where: {
+          id,
+        },
+        include: [
+          {
+            model: User,
+          },
+        ],
+      });
+
       res.status(200).json({
         message: "Update status successfully",
         data: document,
