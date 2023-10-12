@@ -10,5 +10,6 @@ router.post("/upload", upload.single("file"), DocumentController.upload);
 router.get("/documents", DocumentController.findAll);
 router.get("/documents/:id", DocumentController.findOne);
 router.put("/documents/:id", DocumentController.updateStatus);
+router.delete("/documents/:id", DocumentController.delete);
 
 module.exports = router;

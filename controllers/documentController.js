@@ -91,6 +91,34 @@ class DocumentController {
       next(error);
     }
   }
+
+  static async delete(req, res, next) {
+    try {
+      const id = req.params.id;
+      const document = await Document.findOne({
+        where: {
+          id,
+        },
+      });
+      const blobName = document.fileId;
+
+      const blobClient = containerClient.getBlobClient(blobName);
+      await blobClient.delete();
+
+      const deletedDocument = await Document.destroy({
+        where: {
+          id,
+        },
+      });
+
+      res.status(200).json({
+        message: "Delete Document successfully",
+        data: deletedDocument,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = DocumentController;
