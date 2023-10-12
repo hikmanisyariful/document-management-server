@@ -65,6 +65,28 @@ class UserController {
       next(error);
     }
   }
+
+  static async getProfile(req, res, next) {
+    try {
+      const id = req.currentUserId;
+      const user = await User.findOne({
+        where: {
+          id,
+        },
+        include: [
+          {
+            model: Role,
+          },
+        ],
+      });
+      res.status(200).json({
+        message: "Get Profile",
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = UserController;
